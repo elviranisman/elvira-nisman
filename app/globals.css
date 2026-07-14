@@ -93,6 +93,14 @@ button {
     mix-blend-mode: difference;
     display: flex;
     flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease-out;
+}
+
+html.-loaded .appHeader {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .appHeader>.nav {
@@ -558,7 +566,6 @@ html.-stacked .scrollBadge {
     position: relative;
     overflow: hidden;
     aspect-ratio: var(--ratio, 0.8);
-    background: color-mix(in srgb, var(--c-accent) 30%, var(--c-white));
 }
 
 .thumbnail>.image>img {
