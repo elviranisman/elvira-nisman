@@ -10,17 +10,6 @@ gsap.registerPlugin(useGSAP);
 
 const driftSpeed = 14;
 
-function whenPageReady() {
-  const loaded =
-    document.readyState === "complete"
-      ? Promise.resolve()
-      : new Promise((resolve) =>
-          window.addEventListener("load", resolve, { once: true })
-        );
-  const timeout = new Promise((resolve) => setTimeout(resolve, 3500));
-  return Promise.race([loaded, timeout]);
-}
-
 export function InfiniteHome({ children }: { children: React.ReactNode }) {
   const spacerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -49,113 +38,11 @@ export function InfiniteHome({ children }: { children: React.ReactNode }) {
   });
 
   useGSAP(
-    (_context, contextSafe) => {
-      if (!lenis || !firstCopyRef.current || !contextSafe) return;
-      const root = document.documentElement;
-      if (root.classList.contains("-loaded")) return;
-
-      lenis.stop();
-
-      const images = gsap.utils.toArray<HTMLElement>(
-        firstCopyRef.current.querySelectorAll(".thumbnail>.image")
-      );
-      const infos = gsap.utils.toArray<HTMLElement>(
-        firstCopyRef.current.querySelectorAll(".thumbnail>.info")
-      );
-
-      const finish = () => {
-        root.classList.add("-loaded");
-        lenis.start();
-      };
-
-      if (images.length === 0) {
-        root.classList.add("-stacked");
-        finish();
-        return;
-      }
-
-      const run = contextSafe(() => {
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2;
-        const stackWidth = Math.min(300, window.innerWidth * 0.42);
-
-        const pile = images.map((image) => {
-          const rect = image.getBoundingClientRect();
-          return {
-            x: centerX - (rect.left + rect.width / 2),
-            y: centerY - (rect.top + rect.height / 2),
-            scale: stackWidth / rect.width,
-          };
-        });
-
-        images.forEach((image, index) => {
-          gsap.set(image, {
-            x: pile[index].x,
-            y: pile[index].y - 56,
-            scale: pile[index].scale,
-            visibility: "hidden",
-            zIndex: index + 1,
-          });
-        });
-        gsap.set(infos, { opacity: 0 });
-        root.classList.add("-stacked");
-
-        const timeline = gsap.timeline({
-          onComplete: finish,
-          defaults: { force3D: true },
-        });
-
-        const buildStagger = 0.42;
-        const buildDuration = 1.3;
-        images.forEach((image, index) => {
-          timeline.set(image, { visibility: "visible" }, 0.6 + index * buildStagger);
-          timeline.to(
-            image,
-            {
-              y: pile[index].y,
-              duration: buildDuration,
-              ease: "power2.out",
-            },
-            0.6 + index * buildStagger
-          );
-        });
-
-        const flyStart =
-          0.6 + (images.length - 1) * buildStagger + buildDuration + 1.1;
-        [...images].reverse().forEach((image, index) => {
-          timeline.to(
-            image,
-            {
-              x: 0,
-              y: 0,
-              scale: 1,
-              duration: 1.9,
-              ease: "power3.inOut",
-              clearProps: "zIndex",
-            },
-            flyStart + index * 0.42
-          );
-        });
-        timeline.to(
-          infos,
-          { opacity: 1, duration: 0.9, stagger: 0.08, ease: "power2.out" },
-          "-=1.2"
-        );
-      });
-
-      whenPageReady().then(run);
-    },
-    { dependencies: [lenis] }
-  );
-
-  useGSAP(
     () => {
       if (!lenis) return;
       const tick = (_time: number, deltaTime: number) => {
         const limit = Math.max(lenis.limit, 1);
-        if (document.documentElement.classList.contains("-loaded")) {
-          drift.current += (deltaTime / 1000) * driftSpeed;
-        }
+        drift.current += (deltaTime / 1000) * driftSpeed;
         const y = (((lenis.scroll + drift.current) % limit) + limit) % limit;
         let delta = y - lastY.current;
         if (delta > limit / 2) delta -= limit;

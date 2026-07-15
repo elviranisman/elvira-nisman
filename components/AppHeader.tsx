@@ -62,9 +62,7 @@ export function AppHeader() {
 
   const closeMenu = () => {
     setMenuOpen(false);
-    if (document.documentElement.classList.contains("-loaded")) {
-      lenis?.start();
-    }
+    lenis?.start();
   };
 
   return (
