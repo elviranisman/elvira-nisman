@@ -183,6 +183,25 @@ export const projects: Project[] = [
       img(f7, "R1-05210-0011-copy.jpg", 1000, 1441),
     ],
   },
+  {
+    slug: "htw-graduation-show",
+    title: "HTW Graduation Show",
+    subtitle: "Backstage & runway",
+    category: "events",
+    year: "2022",
+    client: "HTW Berlin",
+    location: "Berlin",
+    description:
+      "Backstage and runway coverage of the HTW Berlin graduation show — the nerves, the fittings and the thirty seconds under the lights.",
+    cover: img(f7, "DSCF4174-Kopie.jpg", 1300, 1940),
+    images: [
+      img(f7, "DSCF3929-Kopie-1.jpg", 1200, 1764),
+      img(f7, "DSCF4174-Kopie.jpg", 1300, 1940),
+      img(f7, "DSCF4253-Kopie.jpg", 1300, 1892),
+      img(f7, "DSCF4330-Kopie.jpg", 1200, 1697),
+      img(f7, "R1-05210-0011-copy.jpg", 1000, 1441),
+    ],
+  },
 ];
 
 export const categories = ["editorials", "commercial", "portrait", "events"] as const;
