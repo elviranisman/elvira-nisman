@@ -1,30 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { useLenis } from "lenis/react";
 import { categories } from "@/lib/projects";
 
-const siteLinks = [
-  { href: "https://www.instagram.com/elviranisman", label: "Social media" },
-  { href: undefined, label: "About" },
-  { href: "mailto:hello@monk.haus", label: "Contact" },
-  { href: undefined, label: "Shop" },
-];
+const siteLinks = ["Social media", "About", "Contact", "Shop"];
 
 function CategoryLinks({ onNavigate }: { onNavigate?: () => void }) {
-  const searchParams = useSearchParams();
-  const activeCategory = searchParams.get("category");
+  const pathname = usePathname();
 
   return (
     <>
       {categories.map((category) => (
         <Link
           key={category}
-          href={`/?category=${category}`}
+          href={`/${category}`}
           onClick={onNavigate}
-          className={`link${activeCategory === category ? " -active" : ""}`}
+          className={`link${pathname === `/${category}` ? " -active" : ""}`}
         >
           {category}
         </Link>
@@ -36,15 +30,9 @@ function CategoryLinks({ onNavigate }: { onNavigate?: () => void }) {
 function SiteLinks() {
   return (
     <>
-      {siteLinks.map((link) => (
-        <a
-          key={link.label}
-          href={link.href}
-          className="link"
-          target={link.href?.startsWith("http") ? "_blank" : undefined}
-          rel={link.href?.startsWith("http") ? "noreferrer" : undefined}
-        >
-          {link.label}
+      {siteLinks.map((label) => (
+        <a key={label} className="link">
+          {label}
         </a>
       ))}
     </>
@@ -70,9 +58,7 @@ export function AppHeader() {
       <header className="appHeader">
         <nav className="nav">
           <div className="group">
-            <Suspense fallback={null}>
-              <CategoryLinks />
-            </Suspense>
+            <CategoryLinks />
           </div>
           <div className="group -right">
             <SiteLinks />
@@ -90,9 +76,7 @@ export function AppHeader() {
           Close
         </button>
         <nav className="links">
-          <Suspense fallback={null}>
-            <CategoryLinks onNavigate={closeMenu} />
-          </Suspense>
+          <CategoryLinks onNavigate={closeMenu} />
           <SiteLinks />
         </nav>
       </div>

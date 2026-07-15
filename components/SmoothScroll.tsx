@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { usePathname } from "next/navigation";
 import { ReactLenis, type LenisRef } from "lenis/react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -9,6 +10,8 @@ gsap.registerPlugin(useGSAP);
 
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<LenisRef>(null);
+  const pathname = usePathname();
+  const infinite = pathname === "/";
 
   useGSAP(() => {
     const update = (time: number) => {
@@ -21,8 +24,9 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
 
   return (
     <ReactLenis
+      key={infinite ? "infinite" : "default"}
       root
-      options={{ autoRaf: false, infinite: true, syncTouch: true }}
+      options={{ autoRaf: false, infinite, syncTouch: infinite }}
       ref={lenisRef}
     >
       {children}

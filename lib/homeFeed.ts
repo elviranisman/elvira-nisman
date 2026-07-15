@@ -44,6 +44,27 @@ function takeLandscape(entries: FeedEntry[], from: number): FeedEntry | undefine
   return entries.splice(found, 1)[0];
 }
 
+function ratioOf(entry: FeedEntry) {
+  return entry.image.width / entry.image.height;
+}
+
+function takeDuoPartner(entries: FeedEntry[], from: number): FeedEntry | undefined {
+  const head = entries[from];
+  if (!head || isLandscape(head.image)) return undefined;
+  let best = -1;
+  let bestDiff = Infinity;
+  for (let position = from + 1; position < entries.length; position += 1) {
+    if (isLandscape(entries[position].image)) continue;
+    const diff = Math.abs(ratioOf(entries[position]) - ratioOf(head));
+    if (diff <= bestDiff) {
+      bestDiff = diff;
+      best = position;
+    }
+  }
+  if (best === -1) return undefined;
+  return entries.splice(best, 1)[0];
+}
+
 export function buildFeed(projects: Project[]): FeedModule[] {
   const entries = projects.flatMap(picksFor);
   const modules: FeedModule[] = [];
@@ -59,9 +80,15 @@ export function buildFeed(projects: Project[]): FeedModule[] {
     }
     const kind = pattern[step % pattern.length];
     step += 1;
-    if (kind === "duo" && index + 1 < entries.length) {
-      modules.push({ type: "duo", first: entries[index], second: entries[index + 1] });
-      index += 2;
+    if (kind === "duo") {
+      const partner = takeDuoPartner(entries, index);
+      if (partner) {
+        modules.push({ type: "duo", first: entries[index], second: partner });
+        index += 1;
+      } else {
+        modules.push({ type: "single", entry: entries[index] });
+        index += 1;
+      }
     } else if (kind === "quote") {
       modules.push({
         type: "quote",

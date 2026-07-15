@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import type { Project } from "@/lib/projects";
 import { buildFeed, type FeedEntry, type FeedModule } from "@/lib/homeFeed";
 
@@ -63,15 +64,25 @@ function Module({ module, index }: { module: FeedModule; index: number }) {
           <Caption entry={module.entry} />
         </div>
       );
-    case "duo":
+    case "duo": {
+      const firstRatio = module.first.image.width / module.first.image.height;
+      const secondRatio = module.second.image.width / module.second.image.height;
       return (
-        <div className="module -duo">
+        <div
+          className="module -duo"
+          style={
+            {
+              "--duo-cols": `${firstRatio.toFixed(4)}fr ${secondRatio.toFixed(4)}fr`,
+            } as CSSProperties
+          }
+        >
           <Media entry={module.first} sizes="(min-width: 769px) 50vw, 100vw" />
           <Caption entry={module.first} />
           <Media entry={module.second} sizes="(min-width: 769px) 50vw, 100vw" />
           <Caption entry={module.second} />
         </div>
       );
+    }
     case "quote":
       return (
         <div className="module -quote">

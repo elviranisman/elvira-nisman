@@ -9,6 +9,7 @@ export type Project = {
   title: string;
   subtitle: string;
   category: "editorials" | "commercial" | "portrait" | "events";
+  portraitType?: "artists" | "actors" | "models" | "business";
   year: string;
   client: string;
   location: string;
@@ -122,6 +123,7 @@ export const projects: Project[] = [
     title: "Clara",
     subtitle: "An intimate home story",
     category: "portrait",
+    portraitType: "models",
     year: "2023",
     client: "Personal work",
     location: "Berlin",
@@ -144,6 +146,7 @@ export const projects: Project[] = [
     title: "Ana Rayse",
     subtitle: "Pilates",
     category: "portrait",
+    portraitType: "business",
     year: "2023",
     client: "Ana Rayse",
     location: "Berlin",
