@@ -6,7 +6,12 @@ import { useState } from "react";
 import { useLenis } from "lenis/react";
 import { categories } from "@/lib/projects";
 
-const siteLinks = ["Social media", "About", "Contact", "Shop"];
+const siteLinks = [
+  { label: "Social media", href: undefined },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+  { label: "Shop", href: undefined },
+];
 
 function CategoryLinks({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
@@ -27,14 +32,27 @@ function CategoryLinks({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
-function SiteLinks() {
+function SiteLinks({ onNavigate }: { onNavigate?: () => void }) {
+  const pathname = usePathname();
+
   return (
     <>
-      {siteLinks.map((label) => (
-        <a key={label} className="link">
-          {label}
-        </a>
-      ))}
+      {siteLinks.map((link) =>
+        link.href ? (
+          <Link
+            key={link.label}
+            href={link.href}
+            onClick={onNavigate}
+            className={`link${pathname === link.href ? " -active" : ""}`}
+          >
+            {link.label}
+          </Link>
+        ) : (
+          <a key={link.label} className="link">
+            {link.label}
+          </a>
+        )
+      )}
     </>
   );
 }
@@ -77,7 +95,7 @@ export function AppHeader() {
         </button>
         <nav className="links">
           <CategoryLinks onNavigate={closeMenu} />
-          <SiteLinks />
+          <SiteLinks onNavigate={closeMenu} />
         </nav>
       </div>
     </>
