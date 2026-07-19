@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BackToTop } from "@/components/BackToTop";
 import { getProjects } from "@/lib/sanity";
 
 export const dynamicParams = false;
@@ -73,6 +74,7 @@ export default async function ProjectPage({
           </div>
         ))}
       </div>
+      <BackToTop />
     </div>
   );
 }

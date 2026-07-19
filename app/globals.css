@@ -1381,3 +1381,44 @@ button {
     width: 100%;
     height: auto;
 }
+
+
+.backToTop {
+    position: fixed;
+    right: 15px;
+    bottom: 20px;
+    z-index: 1500;
+    mix-blend-mode: difference;
+    color: var(--c-white);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s var(--ease-simple);
+}
+
+@media (min-width: 769px) {
+    .backToTop {
+        right: 21px;
+        bottom: 24px;
+    }
+}
+
+@media (min-width: 1025px) {
+    .backToTop {
+        right: 80px;
+        bottom: 28px;
+    }
+}
+
+.backToTop.-visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.backToTop:hover {
+    opacity: 0.5;
+}
