@@ -14,10 +14,10 @@ export default function AboutPage() {
       <div className="intro">
         <div className="portrait">
           <Image
-            src="/23-59-a-fashion-story/portrait_berlin_fotograf_mode.jpg"
+            src="/work/editorial/dayami-23-59/analog-portrait-berlin-fotografin-artist.webp"
             alt="Elvira Nisman"
-            width={1200}
-            height={1780}
+            width={800}
+            height={1186}
             sizes="(min-width: 769px) 33vw, 100vw"
             priority
           />

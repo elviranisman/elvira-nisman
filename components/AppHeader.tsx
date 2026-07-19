@@ -7,7 +7,7 @@ import { useLenis } from "lenis/react";
 import { categories } from "@/lib/projects";
 
 const siteLinks = [
-  { label: "Social media", href: undefined },
+  { label: "Social media", href: "/social-media" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
   { label: "Shop", href: undefined },

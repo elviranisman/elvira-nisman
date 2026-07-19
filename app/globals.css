@@ -605,7 +605,8 @@ button {
 
 .categoryPage>.pageTitle,
 .aboutPage>.pageTitle,
-.contactPage>.pageTitle {
+.contactPage>.pageTitle,
+.socialPage>.pageTitle {
     font-family: var(--font-notable), sans-serif;
     font-size: clamp(34px, 7.5vw, 92px);
     font-weight: 400;
@@ -618,7 +619,8 @@ button {
 
     .categoryPage>.pageTitle,
     .aboutPage>.pageTitle,
-    .contactPage>.pageTitle {
+    .contactPage>.pageTitle,
+    .socialPage>.pageTitle {
         margin-bottom: 110px;
     }
 }
@@ -960,4 +962,314 @@ button {
         grid-column: 5 / span 8;
         font-size: 15px;
     }
+}
+
+
+.socialPage {
+    padding: 130px 15px 140px;
+}
+
+@media (min-width: 769px) {
+    .socialPage {
+        padding: 160px 21px 160px;
+    }
+}
+
+@media (min-width: 1025px) {
+    .socialPage {
+        padding: 170px 80px 200px 88px;
+    }
+}
+
+.socialPage>.eyebrow {
+    margin: 0 0 14px;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    opacity: 0.5;
+}
+
+.socialPage .label {
+    margin: 0 0 40px;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    opacity: 0.5;
+}
+
+.socialPage>.services {
+    border-top: 1px solid var(--c-black);
+}
+
+.socialPage .service {
+    border-bottom: 1px solid var(--c-black);
+    padding: 40px 0 56px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px 16px;
+}
+
+@media (min-width: 769px) {
+    .socialPage .service {
+        grid-template-columns: repeat(12, 1fr);
+        padding: 48px 0 72px;
+    }
+
+    .socialPage .service>.num {
+        grid-column: 1 / span 2;
+    }
+
+    .socialPage .service>.body {
+        grid-column: 4 / span 8;
+    }
+}
+
+.socialPage .service>.num {
+    margin: 0;
+    font-family: var(--font-notable), sans-serif;
+    font-size: clamp(22px, 3vw, 36px);
+    line-height: 1;
+    opacity: 0.25;
+}
+
+.socialPage .service .name {
+    margin: 0 0 24px;
+    font-family: var(--font-notable), sans-serif;
+    font-size: clamp(18px, 2.6vw, 30px);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+}
+
+.socialPage .service .text {
+    margin: 0 0 32px;
+    max-width: 66ch;
+    line-height: 210%;
+}
+
+.socialPage .book {
+    display: inline-block;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: opacity 0.2s ease-out;
+}
+
+.socialPage .book:hover {
+    opacity: 0.5;
+}
+
+.socialPage>.collab {
+    margin-top: 140px;
+    text-align: center;
+}
+
+@media (min-width: 1025px) {
+    .socialPage>.collab {
+        margin-top: 200px;
+    }
+}
+
+.socialPage>.collab>.label {
+    margin-bottom: 24px;
+}
+
+.socialPage>.collab>.title {
+    font-family: var(--font-notable), sans-serif;
+    font-size: clamp(22px, 4vw, 46px);
+    font-weight: 400;
+    line-height: 1.25;
+    letter-spacing: 0.06em;
+    margin: 0 auto 28px;
+    max-width: 20ch;
+}
+
+.socialPage>.collab>.text {
+    margin: 0 auto 48px;
+    max-width: 56ch;
+    line-height: 210%;
+}
+
+.socialPage>.collab>.cta {
+    display: inline-block;
+    background: var(--c-accent);
+    color: var(--c-black);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    padding: 16px 30px;
+    transition: background 0.3s var(--ease-simple), color 0.3s var(--ease-simple);
+}
+
+.socialPage>.collab>.cta:hover {
+    background: var(--c-black);
+    color: var(--c-accent);
+}
+
+.socialPage>.feedback {
+    margin-top: 140px;
+}
+
+@media (min-width: 1025px) {
+    .socialPage>.feedback {
+        margin-top: 200px;
+    }
+}
+
+.socialPage>.feedback>.quotes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 56px 64px;
+}
+
+@media (min-width: 769px) {
+    .socialPage>.feedback>.quotes {
+        grid-template-columns: 1fr 1fr;
+        gap: 72px 80px;
+    }
+}
+
+.socialPage>.feedback .entry {
+    max-width: 58ch;
+}
+
+.socialPage>.feedback .stars {
+    margin: 0 0 14px;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+}
+
+.socialPage>.feedback .quote {
+    margin: 0 0 18px;
+    font-size: 12px;
+    line-height: 200%;
+}
+
+@media (min-width: 769px) {
+    .socialPage>.feedback .quote {
+        font-size: 13px;
+    }
+}
+
+.socialPage>.feedback .quote:before {
+    content: "“";
+}
+
+.socialPage>.feedback .quote:after {
+    content: "”";
+}
+
+.socialPage>.feedback .client {
+    margin: 0;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+}
+
+.socialPage>.feedback .client>.role {
+    font-weight: 400;
+    opacity: 0.5;
+}
+
+
+.notFound {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 16px;
+}
+
+.notFound>.code {
+    font-family: var(--font-notable), sans-serif;
+    font-size: clamp(90px, 24vw, 260px);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    text-indent: 0.06em;
+    margin: 0;
+}
+
+.notFound>.note {
+    margin: 24px 0 0;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    opacity: 0.5;
+}
+
+.notFound>.back {
+    margin-top: 48px;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: opacity 0.2s ease-out;
+}
+
+.notFound>.back:hover {
+    opacity: 0.5;
+}
+
+
+.socialPage>.reels {
+    margin-top: 140px;
+}
+
+@media (min-width: 1025px) {
+    .socialPage>.reels {
+        margin-top: 200px;
+    }
+}
+
+.socialPage>.reels>.grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 8px;
+}
+
+@media (min-width: 769px) {
+    .socialPage>.reels>.grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0 16px;
+    }
+}
+
+.socialPage>.reels .video {
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+    display: block;
+}
+
+.socialPage>.reels .reel a {
+    display: block;
+    transition: opacity 0.25s ease-out;
+}
+
+@media (min-width: 1024px) {
+    .socialPage>.reels .reel a:hover {
+        opacity: 0.75;
+    }
+}
+
+.socialPage>.reels .kind {
+    margin: 10px 0 0;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    opacity: 0.45;
+}
+
+.socialPage>.reels .name {
+    margin: 3px 0 0;
+    font-size: 11px;
+    font-weight: 600;
 }
