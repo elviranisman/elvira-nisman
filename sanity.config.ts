@@ -1,6 +1,11 @@
 import { defineConfig } from "sanity";
-import { structureTool, type StructureBuilder } from "sanity/structure";
+import {
+  structureTool,
+  type StructureBuilder,
+  type StructureResolverContext,
+} from "sanity/structure";
 import { visionTool } from "@sanity/vision";
+import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
 import { schemaTypes } from "./sanity/schemas";
 
 const singletons = [
@@ -10,11 +15,16 @@ const singletons = [
   { type: "socialMediaPage", title: "Social media page" },
 ];
 
-const structure = (S: StructureBuilder) =>
+const structure = (S: StructureBuilder, context: StructureResolverContext) =>
   S.list()
     .title("Content")
     .items([
-      S.documentTypeListItem("project").title("Projects"),
+      orderableDocumentListDeskItem({
+        type: "project",
+        title: "Projects",
+        S,
+        context,
+      }),
       S.divider(),
       ...singletons.map((singleton) =>
         S.listItem()

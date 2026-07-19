@@ -1,6 +1,7 @@
 import { createReadStream } from "node:fs";
 import { basename, join } from "node:path";
 import { createClient } from "@sanity/client";
+import { LexoRank } from "lexorank";
 import { projects } from "../lib/projects";
 import { buildFeed, type FeedEntry, type FeedModule } from "../lib/homeFeed";
 import { fallbackAbout, fallbackContact, fallbackSocial } from "../lib/sanity";
@@ -42,7 +43,8 @@ const imageRef = (assetId: string) => ({
 });
 
 async function seedProjects() {
-  for (const [index, project] of projects.entries()) {
+  let rank = LexoRank.middle();
+  for (const project of projects) {
     for (let start = 0; start < project.images.length; start += 4) {
       await Promise.all(
         project.images
@@ -68,8 +70,9 @@ async function seedProjects() {
         ...imageRef(assetCache.get(image.src) as string),
         _key: nextKey(),
       })),
-      order: (index + 1) * 10,
+      orderRank: rank.toString(),
     });
+    rank = rank.genNext();
     console.log("project", project.slug);
   }
 }

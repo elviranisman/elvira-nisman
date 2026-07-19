@@ -59,7 +59,7 @@ function mapProject(raw: Record<string, unknown> | null): Project | null {
 export async function getProjects(): Promise<Project[]> {
   try {
     const raw = await sanityClient.fetch<Record<string, unknown>[]>(
-      `*[_type == "project"] | order(order asc, title asc) ${projectProjection}`
+      `*[_type == "project"] | order(orderRank asc) ${projectProjection}`
     );
     const mapped = raw.map(mapProject).filter((p): p is Project => p !== null);
     return mapped.length > 0 ? mapped : fallbackProjects;
