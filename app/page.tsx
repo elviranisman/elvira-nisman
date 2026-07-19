@@ -1,11 +1,14 @@
 import { HomeFeed } from "@/components/HomeFeed";
 import { InfiniteHome } from "@/components/InfiniteHome";
-import { projects } from "@/lib/projects";
+import { getHomeModules, getProjects } from "@/lib/sanity";
 
-export default function Home() {
+export default async function Home() {
+  const projects = await getProjects();
+  const modules = await getHomeModules(projects);
+
   return (
     <InfiniteHome>
-      <HomeFeed projects={projects} />
+      <HomeFeed modules={modules} />
     </InfiniteHome>
   );
 }

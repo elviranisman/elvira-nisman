@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CategoryArchive } from "@/components/CategoryArchive";
-import { categories, projects, type Category } from "@/lib/projects";
+import { getProjects } from "@/lib/sanity";
+import { categories, type Category } from "@/lib/projects";
 
 export const dynamicParams = false;
 
@@ -29,6 +30,7 @@ export default async function CategoryPage({
   const { category } = await params;
   if (!categories.includes(category as Category)) notFound();
 
+  const projects = await getProjects();
   const filtered = projects.filter((project) => project.category === category);
 
   if (filtered.length === 0) {

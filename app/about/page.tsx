@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { getAboutContent } from "@/lib/sanity";
 
 export const metadata: Metadata = {
   title: "About — Elvira Nisman",
@@ -7,46 +8,32 @@ export const metadata: Metadata = {
     "Elvira Nisman is a Berlin-based photographer and visual storyteller working across portrait, fashion, and film.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const content = await getAboutContent();
+
   return (
     <div className="aboutPage">
       <h1 className="pageTitle">About</h1>
       <div className="intro">
         <div className="portrait">
           <Image
-            src="/work/editorial/dayami-23-59/analog-portrait-berlin-fotografin-artist.webp"
+            src={content.portrait.src}
             alt="Elvira Nisman"
-            width={800}
-            height={1186}
+            width={content.portrait.width}
+            height={content.portrait.height}
             sizes="(min-width: 769px) 33vw, 100vw"
             priority
           />
         </div>
         <div className="bio">
-          <p>
-            Elvira Nisman is a Berlin-based photographer and visual storyteller
-            working across portrait, fashion, and film. Born in 1989 in
-            Moldova, she moves fluidly between commercial and artistic practice
-            — campaigns and lookbooks for fashion and lifestyle brands
-            alongside shootings with artists and culturally influential
-            personalities, as well as independent projects shown in exhibitions
-            and at renowned art fairs.
-          </p>
-          <p>
-            Her visual language sits at the intersection of strength and
-            fragility, presence and absence, the tension between a person and
-            the world around them. The result is imagery that feels intimate
-            rather than staged; clean and minimal on the surface, with a
-            poetic, sometimes bittersweet undertone underneath.
-          </p>
+          {content.paragraphs.map((paragraph) => (
+            <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+          ))}
         </div>
       </div>
       <div className="prints">
-        <h2 className="printsTitle">Take a piece of the story home</h2>
-        <p className="printsText">
-          Limited edition prints, each one a moment caught between honesty and
-          beauty.
-        </p>
+        <h2 className="printsTitle">{content.printsTitle}</h2>
+        <p className="printsText">{content.printsText}</p>
       </div>
     </div>
   );

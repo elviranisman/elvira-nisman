@@ -1,7 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { CSSProperties } from "react";
-import type { Project } from "@/lib/projects";
-import { buildFeed, type FeedEntry, type FeedModule } from "@/lib/homeFeed";
+import type { FeedEntry, FeedModule } from "@/lib/homeFeed";
 
 function Media({
   entry,
@@ -14,14 +14,16 @@ function Media({
 }) {
   return (
     <div className="media">
-      <Image
-        src={entry.image.src}
-        alt={`${entry.project.title} — ${entry.project.subtitle}`}
-        width={entry.image.width}
-        height={entry.image.height}
-        sizes={sizes}
-        priority={priority}
-      />
+      <Link href={`/project/${entry.project.slug}`}>
+        <Image
+          src={entry.image.src}
+          alt={`${entry.project.title} — ${entry.project.subtitle}`}
+          width={entry.image.width}
+          height={entry.image.height}
+          sizes={sizes}
+          priority={priority}
+        />
+      </Link>
     </div>
   );
 }
@@ -94,9 +96,7 @@ function Module({ module, index }: { module: FeedModule; index: number }) {
   }
 }
 
-export function HomeFeed({ projects }: { projects: Project[] }) {
-  const modules = buildFeed(projects);
-
+export function HomeFeed({ modules }: { modules: FeedModule[] }) {
   if (modules.length === 0) {
     return (
       <div className="main">
