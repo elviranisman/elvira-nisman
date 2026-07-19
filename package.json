@@ -13,6 +13,9 @@
     "prebuild": "rm -rf .next/cache/fetch-cache"
   },
   "dependencies": {
+    "@emnapi/core": "^1.11.2",
+    "@emnapi/runtime": "^1.11.2",
+    "@emnapi/wasi-threads": "^1.2.2",
     "@gsap/react": "^2.1.2",
     "@sanity/client": "^7.23.2",
     "@sanity/image-url": "^2.1.1",
