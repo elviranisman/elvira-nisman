@@ -33,6 +33,7 @@ export default async function SocialMediaPage() {
           </section>
         ))}
       </div>
+      {content.reels.length > 0 && (
       <div className="reels">
         <p className="label">Selected content</p>
         <ul className="grid">
@@ -55,6 +56,7 @@ export default async function SocialMediaPage() {
           ))}
         </ul>
       </div>
+      )}
       <div className="feedback">
         <p className="label">Feedback</p>
         <ul className="quotes">

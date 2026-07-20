@@ -15,16 +15,18 @@ export default async function AboutPage() {
     <div className="aboutPage">
       <h1 className="pageTitle">About</h1>
       <div className="intro">
-        <div className="portrait">
-          <Image
-            src={content.portrait.src}
-            alt="Elvira Nisman"
-            width={content.portrait.width}
-            height={content.portrait.height}
-            sizes="(min-width: 769px) 33vw, 100vw"
-            priority
-          />
-        </div>
+        {content.portrait && (
+          <div className="portrait">
+            <Image
+              src={content.portrait.src}
+              alt="Elvira Nisman"
+              width={content.portrait.width}
+              height={content.portrait.height}
+              sizes="(min-width: 769px) 33vw, 100vw"
+              priority
+            />
+          </div>
+        )}
         <div className="bio">
           {content.paragraphs.map((paragraph) => (
             <p key={paragraph.slice(0, 40)}>{paragraph}</p>

@@ -9,7 +9,6 @@
     "lint": "eslint",
     "studio": "sanity dev",
     "studio:deploy": "sanity deploy",
-    "seed": "tsx scripts/seed.ts",
     "prebuild": "rm -rf .next/cache/fetch-cache"
   },
   "dependencies": {
@@ -28,6 +27,7 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "sanity": "^6.5.0",
+    "sanity-plugin-media": "^6.0.4",
     "styled-components": "^6.4.4"
   },
   "devDependencies": {
@@ -38,7 +38,6 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
     "tailwindcss": "^4",
-    "tsx": "^4.23.1",
     "typescript": "^5"
   },
   "overrides": {

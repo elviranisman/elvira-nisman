@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat, Notable } from "next/font/google";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { AppHeader, type MenuPreview } from "@/components/AppHeader";
-import { getProjects } from "@/lib/sanity";
+import { getProjects, getSocialContent } from "@/lib/sanity";
 import { categories } from "@/lib/projects";
 import "./globals.css";
 
@@ -42,10 +42,12 @@ export default async function RootLayout({
       };
     }
   }
-  previews["/social-media"] = {
-    type: "video",
-    src: "/work/social-media/juicy.mp4",
-  };
+  const social = await getSocialContent();
+  const reel =
+    social.reels.find((r) => /juicy/i.test(r.title)) ?? social.reels[0];
+  if (reel) {
+    previews["/social-media"] = { type: "video", src: reel.src };
+  }
 
   return (
     <html lang="en" className={`${montserrat.variable} ${notable.variable}`}>

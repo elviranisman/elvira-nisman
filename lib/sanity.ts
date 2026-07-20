@@ -1,5 +1,5 @@
 import { createClient } from "@sanity/client";
-import { projects as fallbackProjects, type Project, type ProjectImage } from "./projects";
+import type { Project, ProjectImage } from "./projects";
 import { buildFeed, type FeedModule } from "./homeFeed";
 
 export const sanityClient = createClient({
@@ -61,11 +61,10 @@ export async function getProjects(): Promise<Project[]> {
     const raw = await sanityClient.fetch<Record<string, unknown>[]>(
       `*[_type == "project"] | order(orderRank asc) ${projectProjection}`
     );
-    const mapped = raw.map(mapProject).filter((p): p is Project => p !== null);
-    return mapped.length > 0 ? mapped : fallbackProjects;
+    return raw.map(mapProject).filter((p): p is Project => p !== null);
   } catch (error) {
     console.error("sanity getProjects failed", error);
-    return fallbackProjects;
+    return [];
   }
 }
 
@@ -130,18 +129,14 @@ export async function getHomeModules(projects: Project[]): Promise<FeedModule[]>
 }
 
 export type AboutContent = {
-  portrait: ProjectImage;
+  portrait: ProjectImage | null;
   paragraphs: string[];
   printsTitle: string;
   printsText: string;
 };
 
 export const fallbackAbout: AboutContent = {
-  portrait: {
-    src: "/work/editorial/dayami-23-59/analog-portrait-berlin-fotografin-artist.webp",
-    width: 800,
-    height: 1186,
-  },
+  portrait: null,
   paragraphs: [
     "Elvira Nisman is a Berlin-based photographer and visual storyteller working across portrait, fashion, and film. Born in 1989 in Moldova, she moves fluidly between commercial and artistic practice — campaigns and lookbooks for fashion and lifestyle brands alongside shootings with artists and culturally influential personalities, as well as independent projects shown in exhibitions and at renowned art fairs.",
     "Her visual language sits at the intersection of strength and fragility, presence and absence, the tension between a person and the world around them. The result is imagery that feels intimate rather than staged; clean and minimal on the surface, with a poetic, sometimes bittersweet undertone underneath.",
@@ -168,7 +163,7 @@ export async function getAboutContent(): Promise<AboutContent> {
     return {
       portrait: validImage(raw.portrait as RawImage)
         ? (raw.portrait as ProjectImage)
-        : fallbackAbout.portrait,
+        : null,
       paragraphs: paragraphs.length ? paragraphs : fallbackAbout.paragraphs,
       printsTitle: String(raw.printsTitle ?? "") || fallbackAbout.printsTitle,
       printsText: String(raw.printsText ?? "") || fallbackAbout.printsText,
@@ -240,32 +235,7 @@ export const fallbackSocial: SocialContent = {
       text: "I craft high-quality, engaging content designed to capture your audience’s attention and bring your brand to life. From eye-catching visuals to compelling copy, I create content that reflects your brand identity and resonates with your followers. I plan, design, and schedule posts strategically, ensuring your social media feeds stay active and aligned with your marketing objectives. My goal is to help you tell your brand’s story in an authentic and impactful way.",
     },
   ],
-  reels: [
-    {
-      src: "/work/social-media/goal-girls.mp4",
-      kind: "Content creation",
-      title: "Goalgirls",
-      href: "https://www.instagram.com/reel/C5ODHK3s5v8/?igsh=ZTM0cnpmeXJpMXY5",
-    },
-    {
-      src: "/work/social-media/reclaiming-the-night-unveiling-the-shadows.mp4",
-      kind: "Fashion BTS video",
-      title: "Reclaiming the night: unveiling the shadows",
-      href: "https://www.instagram.com/reel/C8Zem7SsHMu/?igsh=MTUwOWtwY3Z4Mmltcg==",
-    },
-    {
-      src: "/work/social-media/juicy.mp4",
-      kind: "UGC content",
-      title: "Juicy",
-      href: "https://www.instagram.com/reel/CxAsJGMsluN/?igsh=MXF3NmhxYnJzb2Nwbg==",
-    },
-    {
-      src: "/work/social-media/yoga-retreat.mp4",
-      kind: "Content creation",
-      title: "Yoga Retreat",
-      href: "https://www.instagram.com/reel/C_IQ6iAIree/?igsh=ejF0NjExb210M2d4",
-    },
-  ],
+  reels: [],
   feedback: [
     {
       quote:

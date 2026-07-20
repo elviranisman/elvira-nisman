@@ -6,6 +6,7 @@ import {
 } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
+import { media } from "sanity-plugin-media";
 import { schemaTypes } from "./sanity/schemas";
 
 const singletons = [
@@ -41,7 +42,7 @@ export default defineConfig({
   title: "Elvira Nisman",
   projectId: "357jdsq3",
   dataset: "production",
-  plugins: [structureTool({ structure }), visionTool()],
+  plugins: [structureTool({ structure }), media(), visionTool()],
   schema: {
     types: schemaTypes,
     templates: (templates) =>
