@@ -215,6 +215,43 @@ button {
     visibility: visible;
 }
 
+.menuScreen>.preview {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.menuScreen>.preview .media {
+    width: min(30vw, 380px);
+    height: auto;
+    animation: previewIn 0.45s var(--ease-simple);
+}
+
+.menuScreen>.preview .media.-video {
+    width: min(22vw, 280px);
+}
+
+@keyframes previewIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.menuScreen>.bar,
+.menuScreen>.big,
+.menuScreen>.small {
+    position: relative;
+    z-index: 1;
+}
+
 .menuScreen>.bar {
     display: flex;
     justify-content: space-between;
@@ -224,13 +261,87 @@ button {
 }
 
 @media (min-width: 769px) {
-    .menuScreen>.bar {
+    .menuScreen>.preview {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.menuScreen>.preview .media {
+    width: min(30vw, 380px);
+    height: auto;
+    animation: previewIn 0.45s var(--ease-simple);
+}
+
+.menuScreen>.preview .media.-video {
+    width: min(22vw, 280px);
+}
+
+@keyframes previewIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.menuScreen>.bar,
+.menuScreen>.big,
+.menuScreen>.small {
+    position: relative;
+    z-index: 1;
+}
+
+.menuScreen>.bar {
         padding: 18px 0;
     }
 }
 
 @media (min-width: 1025px) {
-    .menuScreen>.bar {
+    .menuScreen>.preview {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.menuScreen>.preview .media {
+    width: min(30vw, 380px);
+    height: auto;
+    animation: previewIn 0.45s var(--ease-simple);
+}
+
+.menuScreen>.preview .media.-video {
+    width: min(22vw, 280px);
+}
+
+@keyframes previewIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.menuScreen>.bar,
+.menuScreen>.big,
+.menuScreen>.small {
+    position: relative;
+    z-index: 1;
+}
+
+.menuScreen>.bar {
         padding: 16px 0;
     }
 }
@@ -334,8 +445,17 @@ button {
     transition-delay: 0.36s;
 }
 
-.menuScreen>.big>.bigLink:hover {
-    opacity: 0.5;
+@media (hover: hover) {
+    .menuScreen.-open>.big:hover>.bigLink {
+        opacity: 0;
+        transform: translateY(0);
+        transition: opacity 0.4s var(--ease-simple);
+        transition-delay: 0s;
+    }
+
+    .menuScreen.-open>.big:hover>.bigLink:hover {
+        opacity: 1;
+    }
 }
 
 .menuScreen>.big>.bigLink.-active {
