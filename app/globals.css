@@ -139,7 +139,7 @@ button {
 
 .menuToggle {
     font-family: var(--font-notable), sans-serif;
-    font-size: 12px;
+    font-size: 19px;
     letter-spacing: 0.18em;
     text-indent: 0.18em;
     font-weight: 400;
@@ -150,7 +150,13 @@ button {
 
 @media (min-width: 769px) {
     .menuToggle {
-        font-size: 14px;
+        font-size: 23px;
+    }
+}
+
+@media (min-width: 1025px) {
+    .menuToggle {
+        font-size: 26px;
     }
 }
 
@@ -238,7 +244,7 @@ button {
 
 .menuScreen>.bar>.close {
     font-family: var(--font-notable), sans-serif;
-    font-size: 12px;
+    font-size: 19px;
     letter-spacing: 0.18em;
     text-indent: 0.18em;
     line-height: 1;
@@ -247,7 +253,13 @@ button {
 
 @media (min-width: 769px) {
     .menuScreen>.bar>.close {
-        font-size: 14px;
+        font-size: 23px;
+    }
+}
+
+@media (min-width: 1025px) {
+    .menuScreen>.bar>.close {
+        font-size: 26px;
     }
 }
 
