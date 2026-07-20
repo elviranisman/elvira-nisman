@@ -13,6 +13,17 @@ const siteLinks = [
   { label: "Shop", href: "/shop" },
 ];
 
+const bigLinks = [
+  ...categories.map((category) => ({ label: category, href: `/${category}` })),
+  { label: "Social media", href: "/social-media" },
+];
+
+const smallLinks = [
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+  { label: "Shop", href: "/shop" },
+];
+
 function CategoryLinks({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
 
@@ -58,6 +69,7 @@ function SiteLinks({ onNavigate }: { onNavigate?: () => void }) {
 }
 
 export function AppHeader() {
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const lenis = useLenis();
 
@@ -83,19 +95,45 @@ export function AppHeader() {
           </div>
         </nav>
         <Link href="/" className="heading">
-          Elvira Nisman
+          <span className="full">Elvira Nisman</span>
+          <span className="short">EN</span>
         </Link>
         <button className="menuToggle" onClick={openMenu}>
           Menu
         </button>
       </header>
-      <div className={`mobileMenu${menuOpen ? " -open" : ""}`}>
-        <button className="close" onClick={closeMenu}>
-          Close
-        </button>
-        <nav className="links">
-          <CategoryLinks onNavigate={closeMenu} />
-          <SiteLinks onNavigate={closeMenu} />
+      <div className={`menuScreen${menuOpen ? " -open" : ""}`}>
+        <div className="bar">
+          <Link href="/" className="brand" onClick={closeMenu}>
+            EN
+          </Link>
+          <button className="close" onClick={closeMenu}>
+            Close
+          </button>
+        </div>
+        <nav className="big">
+          {bigLinks.map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              onClick={closeMenu}
+              className={`bigLink${pathname === link.href ? " -active" : ""}`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+        <nav className="small">
+          {smallLinks.map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              onClick={closeMenu}
+              className={`smallLink${pathname === link.href ? " -active" : ""}`}
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
       </div>
     </>
