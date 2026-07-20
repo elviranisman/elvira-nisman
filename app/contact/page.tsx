@@ -1,10 +1,12 @@
-import type { Metadata } from "next";
 import { getContactItems } from "@/lib/sanity";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact — Elvira Nisman",
-  description: "Contact Elvira Nisman — Berlin-based photographer.",
-};
+export const metadata = pageMetadata({
+  title: "Contact",
+  description:
+    "Get in touch with Elvira Nisman — Berlin-based photographer for editorials, campaigns, portraits and content creation.",
+  path: "/contact",
+});
 
 export default async function ContactPage() {
   const contacts = await getContactItems();

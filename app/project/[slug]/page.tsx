@@ -3,7 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BackToTop } from "@/components/BackToTop";
+import { JsonLd } from "@/components/JsonLd";
 import { getProjects } from "@/lib/sanity";
+import { pageMetadata, siteUrl } from "@/lib/seo";
 
 export const dynamicParams = false;
 
@@ -21,10 +23,22 @@ export async function generateMetadata({
   const projects = await getProjects();
   const project = projects.find((p) => p.slug === slug);
   if (!project) return {};
-  return {
-    title: `${project.title} — Elvira Nisman`,
-    description: project.description,
-  };
+  const description =
+    project.description ||
+    `${project.title} — ${project.subtitle} by Berlin-based photographer Elvira Nisman.`;
+  return pageMetadata({
+    title: project.title,
+    description,
+    path: `/project/${project.slug}`,
+    images: [
+      {
+        url: project.cover.src,
+        width: project.cover.width,
+        height: project.cover.height,
+        alt: `${project.title} — ${project.subtitle}`,
+      },
+    ],
+  });
 }
 
 export default async function ProjectPage({
@@ -37,8 +51,28 @@ export default async function ProjectPage({
   const project = projects.find((p) => p.slug === slug);
   if (!project) notFound();
 
+  const galleryJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    "@id": `${siteUrl}/project/${project.slug}#gallery`,
+    url: `${siteUrl}/project/${project.slug}`,
+    name: `${project.title} — ${project.subtitle}`,
+    description: project.description,
+    isPartOf: { "@id": `${siteUrl}/#website` },
+    author: { "@id": `${siteUrl}/#elvira-nisman` },
+    ...(project.year ? { datePublished: project.year } : {}),
+    image: project.images.map((image) => ({
+      "@type": "ImageObject",
+      contentUrl: image.src,
+      width: image.width,
+      height: image.height,
+      creator: { "@id": `${siteUrl}/#elvira-nisman` },
+    })),
+  };
+
   return (
     <div className="projectPage">
+      <JsonLd data={galleryJsonLd} />
       <header className="head">
         <div>
           <h1 className="title">{project.title}</h1>

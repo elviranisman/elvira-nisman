@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import { getAboutContent } from "@/lib/sanity";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "About — Elvira Nisman",
+export const metadata = pageMetadata({
+  title: "About",
   description:
-    "Elvira Nisman is a Berlin-based photographer and visual storyteller working across portrait, fashion, and film.",
-};
+    "Elvira Nisman is a Berlin-based photographer and visual storyteller working across portrait, fashion and film — commercial campaigns, artist shootings and personal projects.",
+  path: "/about",
+});
 
 export default async function AboutPage() {
   const content = await getAboutContent();

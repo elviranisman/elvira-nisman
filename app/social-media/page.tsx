@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
 import { getSocialContent } from "@/lib/sanity";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Social media — Elvira Nisman",
+export const metadata = pageMetadata({
+  title: "Social media",
   description:
-    "Content creation for social media — brand strategy and content creation by Elvira Nisman, Berlin.",
-};
+    "Social media content creation and brand strategy by Elvira Nisman — brand strategy, content creation and UGC for LinkedIn and Instagram, Berlin.",
+  path: "/social-media",
+});
 
 export default async function SocialMediaPage() {
   const content = await getSocialContent();

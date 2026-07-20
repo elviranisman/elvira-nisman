@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import { getShopProducts } from "@/lib/shopify";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Shop — Elvira Nisman",
+export const metadata = pageMetadata({
+  title: "Shop",
   description:
-    "Limited edition prints by Elvira Nisman — each one a moment caught between honesty and beauty.",
-};
+    "Limited edition fine art prints by Elvira Nisman — each one a moment caught between honesty and beauty, printed on demand and shipped worldwide.",
+  path: "/shop",
+});
 
 export default async function ShopPage() {
   const products = await getShopProducts();
