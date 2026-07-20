@@ -15,8 +15,10 @@ export type ShopProduct = {
   variants: ShopVariant[];
 };
 
-const domain = process.env.NEXT_PUBLIC_SHOPIFY_DOMAIN;
-const token = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN;
+const domain = process.env.NEXT_PUBLIC_SHOPIFY_DOMAIN ?? "vh01uc-hi.myshopify.com";
+const token =
+  process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN ??
+  "2617e49d0eb8dcb07c2a567d972bc6b1";
 
 const query = `{
   products(first: 50, sortKey: CREATED_AT, reverse: true) {
