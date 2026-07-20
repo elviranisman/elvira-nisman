@@ -1594,3 +1594,155 @@ button {
     letter-spacing: 0.2em;
     opacity: 0.45;
 }
+
+
+.aboutPage>.exhibitions {
+    margin-top: 140px;
+}
+
+@media (min-width: 1025px) {
+    .aboutPage>.exhibitions {
+        margin-top: 200px;
+    }
+}
+
+.aboutPage>.exhibitions>.label {
+    margin: 0 0 40px;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    opacity: 0.5;
+}
+
+.aboutPage>.exhibitions>.yearGroup {
+    border-top: 1px solid var(--c-black);
+    padding: 20px 0 32px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px 16px;
+}
+
+.aboutPage>.exhibitions>.yearGroup:last-of-type {
+    border-bottom: 1px solid var(--c-black);
+}
+
+@media (min-width: 769px) {
+    .aboutPage>.exhibitions>.yearGroup {
+        grid-template-columns: repeat(12, 1fr);
+        padding: 24px 0 40px;
+    }
+
+    .aboutPage>.exhibitions>.yearGroup>.year {
+        grid-column: 1 / span 3;
+    }
+
+    .aboutPage>.exhibitions>.yearGroup>.entries {
+        grid-column: 5 / span 8;
+    }
+}
+
+.aboutPage>.exhibitions>.yearGroup>.year {
+    margin: 0;
+    font-family: var(--font-notable), sans-serif;
+    font-size: clamp(18px, 2.4vw, 28px);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0.06em;
+}
+
+.aboutPage>.exhibitions>.yearGroup>.entries {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 12px;
+    line-height: 170%;
+}
+
+
+.aboutPage>.testimonials {
+    margin-top: 140px;
+}
+
+@media (min-width: 1025px) {
+    .aboutPage>.testimonials {
+        margin-top: 200px;
+    }
+}
+
+.aboutPage>.testimonials>.label {
+    margin: 0 0 40px;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    opacity: 0.5;
+}
+
+.aboutPage>.testimonials>.quotes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 56px 64px;
+}
+
+@media (min-width: 769px) {
+    .aboutPage>.testimonials>.quotes {
+        grid-template-columns: 1fr 1fr;
+        gap: 72px 80px;
+    }
+}
+
+.aboutPage>.testimonials .entry {
+    max-width: 58ch;
+}
+
+.aboutPage>.testimonials .stars {
+    margin: 0 0 14px;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+}
+
+.aboutPage>.testimonials .quote {
+    margin: 0 0 18px;
+    font-size: 12px;
+    line-height: 200%;
+}
+
+@media (min-width: 769px) {
+    .aboutPage>.testimonials .quote {
+        font-size: 13px;
+    }
+}
+
+.aboutPage>.testimonials .quote:before {
+    content: "“";
+}
+
+.aboutPage>.testimonials .quote:after {
+    content: "”";
+}
+
+.aboutPage>.testimonials .client {
+    margin: 0;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+}
+
+.aboutPage>.testimonials .client>.role {
+    font-weight: 400;
+    opacity: 0.5;
+}
+
+
+.aboutPage>.exhibitions .entryLink {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.2s ease-out;
+}
+
+.aboutPage>.exhibitions .entryLink:hover {
+    opacity: 0.5;
+}

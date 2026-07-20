@@ -131,6 +131,8 @@ export async function getHomeModules(projects: Project[]): Promise<FeedModule[]>
 export type AboutContent = {
   portrait: ProjectImage | null;
   paragraphs: string[];
+  exhibitions: { year: string; entries: { title: string; url?: string }[] }[];
+  testimonials: { quote: string; client: string }[];
   printsTitle: string;
   printsText: string;
 };
@@ -141,10 +143,41 @@ export const fallbackAbout: AboutContent = {
     "Elvira Nisman is a Berlin-based photographer and visual storyteller working across portrait, fashion, and film. Born in 1989 in Moldova, she moves fluidly between commercial and artistic practice — campaigns and lookbooks for fashion and lifestyle brands alongside shootings with artists and culturally influential personalities, as well as independent projects shown in exhibitions and at renowned art fairs.",
     "Her visual language sits at the intersection of strength and fragility, presence and absence, the tension between a person and the world around them. The result is imagery that feels intimate rather than staged; clean and minimal on the surface, with a poetic, sometimes bittersweet undertone underneath.",
   ],
+  exhibitions: [],
+  testimonials: [],
   printsTitle: "Take a piece of the story home",
   printsText:
     "Limited edition prints, each one a moment caught between honesty and beauty.",
 };
+
+type RawExhibitionEntry = string | { title?: string; url?: string } | null;
+
+function mapExhibitionEntry(entry: RawExhibitionEntry) {
+  if (typeof entry === "string") return entry ? { title: entry } : null;
+  if (!entry?.title) return null;
+  return { title: String(entry.title), url: entry.url ? String(entry.url) : undefined };
+}
+
+function mapExhibitions(raw: unknown) {
+  return (Array.isArray(raw) ? raw : [])
+    .map((group: { year?: string; entries?: RawExhibitionEntry[] }) => ({
+      year: String(group?.year ?? ""),
+      entries: (Array.isArray(group?.entries) ? group.entries : [])
+        .map(mapExhibitionEntry)
+        .filter((entry): entry is { title: string; url?: string } => entry !== null),
+    }))
+    .filter((group) => group.year && group.entries.length);
+}
+
+function mapTestimonials(raw: unknown) {
+  const items = (Array.isArray(raw) ? raw : [])
+    .filter((item: { quote?: string; client?: string }) => item?.quote && item?.client)
+    .map((item: { quote?: string; client?: string }) => ({
+      quote: String(item.quote),
+      client: String(item.client),
+    }));
+  return items;
+}
 
 export async function getAboutContent(): Promise<AboutContent> {
   try {
@@ -152,6 +185,8 @@ export async function getAboutContent(): Promise<AboutContent> {
       `*[_type == "aboutPage"][0]{
         "portrait": portrait ${imageProjection},
         paragraphs,
+        exhibitions[]{ year, entries },
+        testimonials[]{ quote, client },
         printsTitle,
         printsText
       }`
@@ -165,6 +200,8 @@ export async function getAboutContent(): Promise<AboutContent> {
         ? (raw.portrait as ProjectImage)
         : null,
       paragraphs: paragraphs.length ? paragraphs : fallbackAbout.paragraphs,
+      exhibitions: mapExhibitions(raw.exhibitions),
+      testimonials: mapTestimonials(raw.testimonials),
       printsTitle: String(raw.printsTitle ?? "") || fallbackAbout.printsTitle,
       printsText: String(raw.printsText ?? "") || fallbackAbout.printsText,
     };
