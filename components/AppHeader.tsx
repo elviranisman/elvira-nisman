@@ -74,7 +74,9 @@ export function AppHeader({
           Menu
         </button>
       </header>
-      <div className={`menuScreen${menuOpen ? " -open" : ""}`}>
+      <div
+        className={`menuScreen${menuOpen ? " -open" : ""}${hovered ? " -focused" : ""}`}
+      >
         {preview && (
           <div className="preview" key={hovered}>
             {preview.type === "video" ? (
@@ -114,7 +116,10 @@ export function AppHeader({
               href={link.href}
               onClick={closeMenu}
               onMouseEnter={() => setHovered(link.href)}
-              className={linkClass(link.href, "bigLink")}
+              onMouseLeave={() => setHovered(null)}
+              className={`${linkClass(link.href, "bigLink")}${
+                hovered === link.href ? " -hovered" : ""
+              }`}
             >
               {link.label}
             </Link>
