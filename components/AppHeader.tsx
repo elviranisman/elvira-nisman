@@ -51,7 +51,8 @@ export function AppHeader() {
     <>
       <header className="appHeader">
         <Link href="/" className="heading">
-          Elvira Nisman
+          <span className="full">Elvira Nisman</span>
+          <span className="short">EN</span>
         </Link>
         <button className="menuToggle" onClick={openMenu}>
           Menu
@@ -60,7 +61,8 @@ export function AppHeader() {
       <div className={`menuScreen${menuOpen ? " -open" : ""}`}>
         <div className="bar">
           <Link href="/" className="brand" onClick={closeMenu}>
-            Elvira Nisman
+            <span className="full">Elvira Nisman</span>
+            <span className="short">EN</span>
           </Link>
           <button className="close" onClick={closeMenu}>
             Close

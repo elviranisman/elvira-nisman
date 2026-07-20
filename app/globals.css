@@ -137,6 +137,24 @@ button {
     opacity: 0.5;
 }
 
+.appHeader>.heading .short,
+.menuScreen>.bar>.brand .short {
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    .appHeader>.heading .full,
+    .menuScreen>.bar>.brand .full {
+        display: none;
+    }
+
+    .appHeader>.heading .short,
+    .menuScreen>.bar>.brand .short {
+        display: inline;
+    }
+}
+
 .menuToggle {
     font-family: var(--font-notable), sans-serif;
     font-size: 19px;
