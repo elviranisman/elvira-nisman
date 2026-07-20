@@ -1,141 +1,101 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useLenis } from "lenis/react";
-import { useMountEffect } from "@/hooks/useMountEffect";
 import { categories } from "@/lib/projects";
 
-export type MenuPreview = {
-  type: "image" | "video";
-  src: string;
-  width?: number;
-  height?: number;
-};
-
-const bigLinks = [
-  ...categories.map((category) => ({ label: category, href: `/${category}` })),
+const siteLinks = [
   { label: "Social media", href: "/social-media" },
-];
-
-const smallLinks = [
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
   { label: "Shop", href: "/shop" },
 ];
 
-export function AppHeader({
-  previews = {},
-}: {
-  previews?: Record<string, MenuPreview>;
-}) {
+function CategoryLinks({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
+
+  return (
+    <>
+      {categories.map((category) => (
+        <Link
+          key={category}
+          href={`/${category}`}
+          onClick={onNavigate}
+          className={`link${pathname === `/${category}` ? " -active" : ""}`}
+        >
+          {category}
+        </Link>
+      ))}
+    </>
+  );
+}
+
+function SiteLinks({ onNavigate }: { onNavigate?: () => void }) {
+  const pathname = usePathname();
+
+  return (
+    <>
+      {siteLinks.map((link) =>
+        link.href ? (
+          <Link
+            key={link.label}
+            href={link.href}
+            onClick={onNavigate}
+            className={`link${pathname === link.href ? " -active" : ""}`}
+          >
+            {link.label}
+          </Link>
+        ) : (
+          <a key={link.label} className="link">
+            {link.label}
+          </a>
+        )
+      )}
+    </>
+  );
+}
+
+export function AppHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [hovered, setHovered] = useState<string | null>(null);
-  const menuOpenRef = useRef(false);
   const lenis = useLenis();
 
   const openMenu = () => {
     setMenuOpen(true);
-    menuOpenRef.current = true;
     lenis?.stop();
   };
 
   const closeMenu = () => {
     setMenuOpen(false);
-    menuOpenRef.current = false;
-    setHovered(null);
     lenis?.start();
   };
-
-  useMountEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && menuOpenRef.current) closeMenu();
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  });
-
-  const linkClass = (href: string, base: string) =>
-    `${base}${pathname === href ? " -active" : ""}`;
-
-  const preview = hovered ? previews[hovered] : undefined;
 
   return (
     <>
       <header className="appHeader">
+        <nav className="nav">
+          <div className="group">
+            <CategoryLinks />
+          </div>
+          <div className="group -right">
+            <SiteLinks />
+          </div>
+        </nav>
         <Link href="/" className="heading">
-          <span className="full">Elvira Nisman</span>
-          <span className="short">EN</span>
+          Elvira Nisman
         </Link>
         <button className="menuToggle" onClick={openMenu}>
           Menu
         </button>
       </header>
-      <div
-        className={`menuScreen${menuOpen ? " -open" : ""}${hovered ? " -focused" : ""}`}
-      >
-        {preview && (
-          <div className="preview" key={hovered}>
-            {preview.type === "video" ? (
-              <video
-                className="media -video"
-                src={preview.src}
-                autoPlay
-                muted
-                loop
-                playsInline
-              />
-            ) : (
-              <Image
-                className="media"
-                src={preview.src}
-                alt=""
-                width={preview.width ?? 800}
-                height={preview.height ?? 1000}
-                sizes="30vw"
-              />
-            )}
-          </div>
-        )}
-        <div className="bar">
-          <Link href="/" className="brand" onClick={closeMenu}>
-            <span className="full">Elvira Nisman</span>
-            <span className="short">EN</span>
-          </Link>
-          <button className="close" onClick={closeMenu}>
-            Close
-          </button>
-        </div>
-        <nav className="big" onMouseLeave={() => setHovered(null)}>
-          {bigLinks.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              onClick={closeMenu}
-              onMouseEnter={() => setHovered(link.href)}
-              onMouseLeave={() => setHovered(null)}
-              className={`${linkClass(link.href, "bigLink")}${
-                hovered === link.href ? " -hovered" : ""
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-        <nav className="small">
-          {smallLinks.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              onClick={closeMenu}
-              className={linkClass(link.href, "smallLink")}
-            >
-              {link.label}
-            </Link>
-          ))}
+      <div className={`mobileMenu${menuOpen ? " -open" : ""}`}>
+        <button className="close" onClick={closeMenu}>
+          Close
+        </button>
+        <nav className="links">
+          <CategoryLinks onNavigate={closeMenu} />
+          <SiteLinks onNavigate={closeMenu} />
         </nav>
       </div>
     </>

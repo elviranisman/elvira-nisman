@@ -6,7 +6,7 @@ import { useLenis } from "lenis/react";
 import { useMountEffect } from "@/hooks/useMountEffect";
 import type { Project } from "@/lib/projects";
 
-const portraitFilters = ["all", "artists", "people"] as const;
+const portraitFilters = ["all", "artists", "models", "people"] as const;
 
 type PortraitFilter = (typeof portraitFilters)[number];
 

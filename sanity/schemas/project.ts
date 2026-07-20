@@ -44,6 +44,7 @@ export const project = defineType({
       options: {
         list: [
           { title: "Artists", value: "artists" },
+          { title: "Models", value: "models" },
           { title: "People", value: "people" },
         ],
         layout: "radio",

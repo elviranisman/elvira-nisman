@@ -9,7 +9,7 @@ export type Project = {
   title: string;
   subtitle: string;
   category: "editorials" | "commercial" | "portrait" | "events";
-  portraitType?: "artists" | "people";
+  portraitType?: "artists" | "models" | "people";
   year: string;
   client: string;
   location: string;
