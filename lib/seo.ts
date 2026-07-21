@@ -75,8 +75,7 @@ export function pageMetadata({
   };
 }
 
-export const personJsonLd = {
-  "@context": "https://schema.org",
+const personJsonLd = {
   "@type": "Person",
   "@id": `${siteUrl}/#elvira-nisman`,
   name: "Elvira Nisman",
@@ -104,8 +103,7 @@ export const personJsonLd = {
   sameAs: socialLinks,
 };
 
-export const websiteJsonLd = {
-  "@context": "https://schema.org",
+const websiteJsonLd = {
   "@type": "WebSite",
   "@id": `${siteUrl}/#website`,
   url: siteUrl,
@@ -113,4 +111,9 @@ export const websiteJsonLd = {
   description: siteDescription,
   inLanguage: "en",
   publisher: { "@id": `${siteUrl}/#elvira-nisman` },
+};
+
+export const siteJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [websiteJsonLd, personJsonLd],
 };

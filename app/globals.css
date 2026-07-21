@@ -1738,11 +1738,16 @@ button {
 
 
 .aboutPage>.exhibitions .entryLink {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    transition: opacity 0.2s ease-out;
+    background: var(--c-accent);
+    color: var(--c-black);
+    padding: 1px 5px;
+    margin: 0 -2px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    transition: background 0.25s var(--ease-simple), color 0.25s var(--ease-simple);
 }
 
 .aboutPage>.exhibitions .entryLink:hover {
-    opacity: 0.5;
+    background: var(--c-black);
+    color: var(--c-accent);
 }

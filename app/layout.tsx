@@ -5,11 +5,10 @@ import { AppHeader } from "@/components/AppHeader";
 import { JsonLd } from "@/components/JsonLd";
 import {
   keywords,
-  personJsonLd,
   siteDescription,
+  siteJsonLd,
   siteName,
   siteUrl,
-  websiteJsonLd,
 } from "@/lib/seo";
 import "./globals.css";
 
@@ -90,7 +89,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${montserrat.variable} ${notable.variable}`}>
       <body>
-        <JsonLd data={[websiteJsonLd, personJsonLd]} />
+        <JsonLd data={siteJsonLd} />
         <SmoothScroll>
           <AppHeader />
           {children}
