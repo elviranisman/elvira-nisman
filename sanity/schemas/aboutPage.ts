@@ -40,16 +40,30 @@ export const aboutPage = defineType({
                   fields: [
                     defineField({
                       name: "title",
+                      title: "Full line",
                       type: "string",
+                      description:
+                        "The whole line, e.g. SOLO Digital Show - Studio 111",
                       validation: (rule) => rule.required(),
                     }),
                     defineField({
+                      name: "highlight",
+                      title: "Words in accent colour",
+                      type: "string",
+                      description:
+                        "Optional. The part of the line to show in the accent colour, e.g. Studio 111. Leave empty to keep the whole line plain.",
+                    }),
+                    defineField({
                       name: "url",
+                      title: "Link",
                       type: "url",
-                      description: "Optional link to the exhibition",
+                      description:
+                        "Optional. Makes the accent words clickable.",
                     }),
                   ],
-                  preview: { select: { title: "title", subtitle: "url" } },
+                  preview: {
+                    select: { title: "title", subtitle: "highlight" },
+                  },
                 },
               ],
               validation: (rule) => rule.min(1),

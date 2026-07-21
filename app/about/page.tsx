@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getAboutContent } from "@/lib/sanity";
+import { getAboutContent, type ExhibitionEntry } from "@/lib/sanity";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -8,6 +8,34 @@ export const metadata = pageMetadata({
     "Elvira Nisman is a Berlin-based photographer and visual storyteller working across portrait, fashion and film — commercial campaigns, artist shootings and personal projects.",
   path: "/about",
 });
+
+function AccentPart({ text, url }: { text: string; url?: string }) {
+  if (!url) return <span className="entryMark">{text}</span>;
+  return (
+    <a className="entryLink" href={url} target="_blank" rel="noreferrer">
+      {text}
+    </a>
+  );
+}
+
+function ExhibitionLine({ entry }: { entry: ExhibitionEntry }) {
+  const { title, highlight, url } = entry;
+  const index = highlight
+    ? title.toLowerCase().indexOf(highlight.toLowerCase())
+    : -1;
+
+  if (index === -1) {
+    return url ? <AccentPart text={title} url={url} /> : <>{title}</>;
+  }
+
+  return (
+    <>
+      {title.slice(0, index)}
+      <AccentPart text={title.slice(index, index + highlight!.length)} url={url} />
+      {title.slice(index + highlight!.length)}
+    </>
+  );
+}
 
 export default async function AboutPage() {
   const content = await getAboutContent();
@@ -43,18 +71,7 @@ export default async function AboutPage() {
               <ul className="entries">
                 {group.entries.map((entry) => (
                   <li key={entry.title}>
-                    {entry.url ? (
-                      <a
-                        className="entryLink"
-                        href={entry.url}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {entry.title}
-                      </a>
-                    ) : (
-                      entry.title
-                    )}
+                    <ExhibitionLine entry={entry} />
                   </li>
                 ))}
               </ul>

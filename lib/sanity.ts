@@ -131,7 +131,7 @@ export async function getHomeModules(projects: Project[]): Promise<FeedModule[]>
 export type AboutContent = {
   portrait: ProjectImage | null;
   paragraphs: string[];
-  exhibitions: { year: string; entries: { title: string; url?: string }[] }[];
+  exhibitions: { year: string; entries: ExhibitionEntry[] }[];
   testimonials: { quote: string; client: string }[];
   printsTitle: string;
   printsText: string;
@@ -150,12 +150,25 @@ export const fallbackAbout: AboutContent = {
     "Limited edition prints, each one a moment caught between honesty and beauty.",
 };
 
-type RawExhibitionEntry = string | { title?: string; url?: string } | null;
+export type ExhibitionEntry = {
+  title: string;
+  highlight?: string;
+  url?: string;
+};
 
-function mapExhibitionEntry(entry: RawExhibitionEntry) {
+type RawExhibitionEntry =
+  | string
+  | { title?: string; highlight?: string; url?: string }
+  | null;
+
+function mapExhibitionEntry(entry: RawExhibitionEntry): ExhibitionEntry | null {
   if (typeof entry === "string") return entry ? { title: entry } : null;
   if (!entry?.title) return null;
-  return { title: String(entry.title), url: entry.url ? String(entry.url) : undefined };
+  return {
+    title: String(entry.title),
+    highlight: entry.highlight ? String(entry.highlight) : undefined,
+    url: entry.url ? String(entry.url) : undefined,
+  };
 }
 
 function mapExhibitions(raw: unknown) {
@@ -164,7 +177,7 @@ function mapExhibitions(raw: unknown) {
       year: String(group?.year ?? ""),
       entries: (Array.isArray(group?.entries) ? group.entries : [])
         .map(mapExhibitionEntry)
-        .filter((entry): entry is { title: string; url?: string } => entry !== null),
+        .filter((entry): entry is ExhibitionEntry => entry !== null),
     }))
     .filter((group) => group.year && group.entries.length);
 }
@@ -185,7 +198,7 @@ export async function getAboutContent(): Promise<AboutContent> {
       `*[_type == "aboutPage"][0]{
         "portrait": portrait ${imageProjection},
         paragraphs,
-        exhibitions[]{ year, entries },
+        exhibitions[]{ year, entries[]{ title, highlight, url } },
         testimonials[]{ quote, client },
         printsTitle,
         printsText
